@@ -1,0 +1,64 @@
+import random
+
+rock = "Rock"
+paper = "Paper"
+scissors = "Scissors"
+
+player_move = input("Choose [r]ock, [p]aper, or [s]cissors: ")
+if player_move == 'r':
+    player_move = rock
+elif player_move == 'p':
+    player_move = paper
+elif player_move == 's':
+    player_move = scissors
+else:
+    raise SystemExit("Invalid input. Try again ....")
+
+computer_random_move = random.randint(1,3)
+computer_move = ""
+if computer_random_move == 1:
+    computer_move = rock
+elif computer_random_move == 2:
+    computer_move = paper
+elif computer_random_move == 3:
+    computer_move = scissors
+
+while(player_move == computer_move):
+    print(f"Both choose {player_move}")
+
+    player_move = input("Please choose again [r]ock, [p]aper, or [s]cissors: ")
+    if player_move == 'r':
+        player_move = rock
+    elif player_move == 'p':
+        player_move = paper
+    elif player_move == 's':
+        player_move = scissors
+    else:
+        raise SystemExit("Invalid input. Try again ....")
+
+    computer_random_move = random.randint(1, 3)
+    if computer_random_move == 1:
+        computer_move = rock
+    elif computer_random_move == 2:
+        computer_move = paper
+    elif computer_random_move == 3:
+        computer_move = scissors
+
+if player_move == rock:
+    if(computer_move == paper):
+        print("YOU LOSE")
+    if (computer_move == scissors):
+        print("YOU BEAT")
+elif player_move == paper:
+    if(computer_move == rock):
+        print("YOU BEAT")
+    if (computer_move == scissors):
+        print("YOU LOSE")
+elif player_move == scissors:
+    if(computer_move == rock):
+        print("YOU LOSE")
+    if (computer_move == paper):
+        print("YOU BEAT")
+
+print(f"You choose {player_move}")
+print(f"Your opponent choose {computer_move}")
