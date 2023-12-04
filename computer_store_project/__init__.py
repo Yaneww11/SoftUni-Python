@@ -1,0 +1,2 @@
+def equipment():
+    return None
