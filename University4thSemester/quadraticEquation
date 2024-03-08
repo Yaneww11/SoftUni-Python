@@ -1,0 +1,16 @@
+import math
+
+
+def quadratic_equation(a, b, c):
+    discriminant = b * b - 4 * a * c
+    if discriminant > 0:
+        x1 = (-b + math.sqrt(discriminant)) / (2 * a)
+        x2 = (-b - math.sqrt(discriminant)) / (2 * a)
+        return f"{x1:.2f} | {x2:.2f}"
+    if discriminant == 0:
+        x1 = -b / (2 * a)
+        return f"{x1:.2f}"
+    return "no real roots"
+
+
+print(quadratic_equation(1, 4, 4))
