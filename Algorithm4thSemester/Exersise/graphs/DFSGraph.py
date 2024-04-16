@@ -13,6 +13,7 @@ def ReadGraph(inputData, n):
 def DFS(vertex, vertices, used, path, prefix):
     used[vertex] = True
     print(f"{prefix} {vertex + 1}")
+    # With sort the order of data in input is not important, always have the same tree as e result
     for nextVertex in sorted(vertices[vertex]):
         if used[nextVertex]:
             continue
