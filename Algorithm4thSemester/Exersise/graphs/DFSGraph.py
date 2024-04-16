@@ -2,7 +2,7 @@ from collections import deque
 
 
 def ReadGraph(inputData, n):
-    vertices = [[] for _ in range(n)]
+    vertices = [[] for _ in range(n + 1)]
     for edge in inputData:
         x = edge[0] - 1
         y = edge[1] - 1
@@ -104,14 +104,39 @@ def printWithDfsStack(vertices, nodes):
     print(f"Path DFS with Stack from {path[0]}: {path}")
 
 
-inputData = [(2, 6), (2, 7), (1, 4), (1, 7), (3, 6), (3, 5), (5, 6), (3, 7)]
+def countOfGraphComponents(vertices, nodes):
+    countComponents = 1
+    vertex = 1 - 1
+    used = [False] * (nodes)
+    # Path for the number
+    path = [-1] * (nodes + 1)
+    # The path start from vertex
+    path[vertex] = -1
+    print(f"Component {countComponents}:")
+    DFS(vertex, vertices, used, path, "")
+    for i in range(nodes):
+        if used[i] is False:
+            countComponents += 1
+            print(f"Component {countComponents}:")
+            DFS(i, vertices, used, path, "")
+    return print(f"Count of components is {countComponents}")
+
+
+inputData1 = [(2, 6), (2, 7), (1, 4), (1, 7), (3, 6), (3, 5), (5, 6), (3, 7)]
+inputData2 = [(2, 6), (2, 7), (1, 7), (3, 6), (3, 5), (5, 6), (3, 7)]
 # Count nodes
 n = 7
+n2 = 8
 # Count edges
-m = len(inputData)
+m = len(inputData1)
 
-vertices = ReadGraph(inputData, n)
+vertices = ReadGraph(inputData1, n)
 print(vertices)
+vertices2 = ReadGraph(inputData2, n)
+print(vertices2)
 printPathWithDFS(vertices, n)
 printWithBFS(vertices, n)
 printWithDfsStack(vertices, n)
+countOfGraphComponents(vertices2, n)
+print("Another tree")
+countOfGraphComponents(vertices2, n2)
