@@ -38,9 +38,10 @@ def Dijkstra(vertices, start):
     # Use priority queue, to get min element in every pop
     queue = []
     heapq.heappush(queue, Node(start, 0))
+    level = 0
+    # repeat, for fast can use for i in range(numberVertex - 1)
+    while queue:
 
-    # repeat, maybe (numberVertex - 1) can be error and would be for i in range(numberVertex)
-    for i in range(numberVertex - 1):
         # find best element(min)
         node: Node = heapq.heappop(queue)
         while queue and node.vertex in used:
@@ -49,18 +50,20 @@ def Dijkstra(vertices, start):
 
         # update distance
         nextNode: Node
+        print(f"On level {level}")
         for nextNode in vertices[node.vertex]:
             currentDistance = distancesFromStart[nextNode.vertex]
             newDistance = distancesFromStart[node.vertex] + nextNode.weight
             if currentDistance > newDistance:
                 distancesFromStart[nextNode.vertex] = newDistance
                 heapq.heappush(queue, Node(nextNode.vertex, newDistance))
-        print(f"Distance to {node.vertex} is {distancesFromStart[node.vertex]}")
+
+        print(" ".join([str(x) for x in distancesFromStart]))
+        level += 1
 
     return distancesFromStart
 
 
-# name node is index in Array vertices
 inputData1 = [(1, 2, 2), (1, 3, 3), (1, 4, 11), (2, 3, 3), (2, 5, 15), (3, 4, 2), (3, 5, 6), (4, 5, 3)]
 # Number of nodes
 n = 5
@@ -75,4 +78,5 @@ for i in range(n):
 print()
 print(f"Distance from Node {startNode}")
 distances = Dijkstra(vertices, startNode)
+print("Final distaces")
 print(" ".join([str(x) for x in distances]))
