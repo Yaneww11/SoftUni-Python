@@ -60,6 +60,7 @@ def Dijkstra(vertices, start):
     return distancesFromStart
 
 
+# name node is index in Array vertices
 inputData1 = [(1, 2, 2), (1, 3, 3), (1, 4, 11), (2, 3, 3), (2, 5, 15), (3, 4, 2), (3, 5, 6), (4, 5, 3)]
 # Number of nodes
 n = 5
