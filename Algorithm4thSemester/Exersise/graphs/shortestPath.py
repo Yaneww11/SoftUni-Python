@@ -13,7 +13,7 @@ class Node:
         return self.weight < other.weight
 
     def __repr__(self):
-        return f'To node[{self.vertex}] - weight {self.weight}'
+        return f'To node[{self.vertex}] and weight {self.weight}'
 
 
 def addEdge(vertices, fromm, to, weight):
@@ -39,8 +39,8 @@ def Dijkstra(vertices, start):
     queue = []
     heapq.heappush(queue, Node(start, 0))
 
-    # repeat
-    for i in range(numberVertex):
+    # repeat, maybe (numberVertex - 1) can be error and would be for i in range(numberVertex)
+    for i in range(numberVertex - 1):
         # find best element(min)
         node: Node = heapq.heappop(queue)
         while queue and node.vertex in used:
@@ -55,6 +55,7 @@ def Dijkstra(vertices, start):
             if currentDistance > newDistance:
                 distancesFromStart[nextNode.vertex] = newDistance
                 heapq.heappush(queue, Node(nextNode.vertex, newDistance))
+        print(f"Distance to {node.vertex} is {distancesFromStart[node.vertex]}")
 
     return distancesFromStart
 
@@ -64,7 +65,13 @@ inputData1 = [(1, 2, 2), (1, 3, 3), (1, 4, 11), (2, 3, 3), (2, 5, 15), (3, 4, 2)
 n = 5
 # Number of edges
 m = 8
+
+startNode = 0
 vertices = ReadWeightedGraph(inputData1, n)
-print(vertices)
-distances = Dijkstra(vertices, 0)
+for i in range(n):
+    print(f"Node {i} have edges: \n {", ".join([str(node) for node in vertices[i]])}")
+
+print()
+print(f"Distance from Node {startNode}")
+distances = Dijkstra(vertices, startNode)
 print(" ".join([str(x) for x in distances]))
