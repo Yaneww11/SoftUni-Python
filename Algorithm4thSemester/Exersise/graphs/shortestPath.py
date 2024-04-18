@@ -65,18 +65,26 @@ def Dijkstra(vertices, start):
 
 
 inputData1 = [(1, 2, 2), (1, 3, 3), (1, 4, 11), (2, 3, 3), (2, 5, 15), (3, 4, 2), (3, 5, 6), (4, 5, 3)]
+inputData2 = [(1, 2, 2), (1, 3, 3), (1, 4, 11), (2, 3, 3), (2, 5, 15), (3, 4, 2), (3, 5, 6), (4, 5, 3),
+              (1, 6, 100), (2, 6, 100), (5, 6, 1)]
 # Number of nodes
 n = 5
+n2 = 6
 # Number of edges
 m = 8
+m2 = 11
 
 startNode = 0
 vertices = ReadWeightedGraph(inputData1, n)
+vertices2 = ReadWeightedGraph(inputData2, n2)
 for i in range(n):
     print(f"Node {i} have edges: \n {", ".join([str(node) for node in vertices[i]])}")
 
 print()
 print(f"Distance from Node {startNode}")
 distances = Dijkstra(vertices, startNode)
+print("Final distaces")
+print(" ".join([str(x) for x in distances]))
+distances = Dijkstra(vertices2, startNode)
 print("Final distaces")
 print(" ".join([str(x) for x in distances]))
