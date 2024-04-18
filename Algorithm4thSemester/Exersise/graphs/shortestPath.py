@@ -1,4 +1,6 @@
-from collections import deque
+import heapq
+import sys
+from typing import List, Optional, Set
 
 
 class Node:
@@ -6,17 +8,9 @@ class Node:
         self.vertex = vertex
         self.weight = weight
 
+    # use it to order in priority queue
     def __lt__(self, other):
         return self.weight < other.weight
-
-    def __gt__(self, other):
-        return other.__lt__(self)
-
-    def __eq__(self, other):
-        return self.weight == other.weight
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
 
     def __repr__(self):
         return f'To node[{self.vertex}] - weight {self.weight}'
@@ -36,7 +30,33 @@ def ReadWeightedGraph(data, nodes):
 
 
 def Dijkstra(vertices, start):
-    queue = deque()
+    numberVertex = len(vertices)
+    distancesFromStart: list[int] = [sys.maxsize] * (numberVertex - 1)
+    distancesFromStart[0] = 0
+    used: Set = set()
+
+    # Use priority queue, to get min element in every pop
+    queue = []
+    heapq.heappush(queue, Node(start, 0))
+
+    # repeat
+    for i in range(numberVertex):
+        # find best element(min)
+        node: Node = heapq.heappop(queue)
+        while queue and node.vertex in used:
+            node = heapq.heappop(queue)
+        used.add(node.vertex)
+
+        # update distance
+        nextNode: Node
+        for nextNode in vertices[node.vertex]:
+            currentDistance = distancesFromStart[nextNode.vertex]
+            newDistance = distancesFromStart[node.vertex] + nextNode.weight
+            if currentDistance > newDistance:
+                distancesFromStart[nextNode.vertex] = newDistance
+                heapq.heappush(queue, Node(nextNode.vertex, newDistance))
+
+    return distancesFromStart
 
 
 inputData1 = [(1, 2, 2), (1, 3, 3), (1, 4, 11), (2, 3, 3), (2, 5, 15), (3, 4, 2), (3, 5, 6), (4, 5, 3)]
@@ -46,4 +66,5 @@ n = 5
 m = 8
 vertices = ReadWeightedGraph(inputData1, n)
 print(vertices)
-Dijkstra(vertices, 0)
+distances = Dijkstra(vertices, 0)
+print(" ".join([str(x) for x in distances]))
