@@ -79,17 +79,22 @@ def FindMinimumSpanningTree(vertices, start_vertex):
 
 def FindMinimumSpanningTreeWhichIncludeEdge(vertices, fromVertex, toVertex, weightEdge):
     tree = set()
+    edges = PriorityQueue()
     tree.add(fromVertex)
     tree.add(toVertex)
+
+    # add edges from fromVertex and toVertex to edges
+    [edges.put(Edge(fromVertex, neighbour.vertex, neighbour.weight)) for neighbour in vertices[fromVertex]]
+    [edges.put(Edge(toVertex, neighbour.vertex, neighbour.weight)) for neighbour in vertices[toVertex]]
+
     # sum = 0
     mst: List[Edge] = [Edge(fromVertex, toVertex, weightEdge)]
     vertex = fromVertex
-    edges = PriorityQueue()
     while True:
         tree.add(vertex)
         # add edges to edges
-        for next in vertices[vertex]:
-            edges.put(Edge(vertex, next.vertex, next.weight))
+        for neighbour in vertices[vertex]:
+            edges.put(Edge(vertex, neighbour.vertex, neighbour.weight))
 
         # find best edge
         edge: Optional[Edge] = findBestEdge(edges, tree)
