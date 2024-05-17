@@ -1,5 +1,5 @@
 import csv
-from typing import Optional
+from typing import Optional, List
 from queue import PriorityQueue
 
 
@@ -13,6 +13,9 @@ class Edge:
     def __lt__(self, other):
         return self.weight < other.weight
 
+    def __repr__(self):
+        return f'{self.x} -> {self.y} ({self.weight})'
+
 
 class Node:
     def __init__(self, vertex, weight):
@@ -24,7 +27,7 @@ class Node:
         return self.weight < other.weight
 
     def __repr__(self):
-        return f'To node[{self.vertex}] and weight {self.weight}'
+        return f'To {self.vertex} ({self.weight})'
 
 
 def addEdge(from_vertex, to_vertex, weight, vertices):
@@ -48,7 +51,8 @@ def findBestEdge(edges, tree):
 
 def FindMinimumSpanningTree(vertices, start_vertex):
     tree = set()
-    sum = 0
+    # sum = 0
+    mst: List[Edge] = []
     vertex = start_vertex
     edges = PriorityQueue()
     while True:
@@ -64,11 +68,13 @@ def FindMinimumSpanningTree(vertices, start_vertex):
             break
 
         vertex = edge.y if edge.x in tree else edge.x
-        sum += edge.weight
+        mst.append(edge)
+        # sum += edge.weight
 
         if edges.empty():
             break
-    return sum
+    # return sum
+    return mst
 
 
 csv_data = ("""5
@@ -95,5 +101,7 @@ for i in range(int(m)):
     addEdge(edge[0], edge[1], edge[2], vertices)
     addEdge(edge[1], edge[0], edge[2], vertices)
 
-result = FindMinimumSpanningTree(vertices, 1)
-print(result)
+mst = FindMinimumSpanningTree(vertices, 1)
+sum_mst_path = sum([mst[i].weight for i in range(len(mst))])
+print(', '.join(str(x) for x in mst))
+print(f'The sum is {sum_mst_path}')
