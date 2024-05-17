@@ -37,7 +37,9 @@ def findBestEdge(edges, tree):
     edge = edges.get()
     vertex = edge.y if edge.x in tree else edge.x
 
-    while vertex in tree and edges.empty() == False:
+    while vertex in tree:
+        if edges.empty():
+            return None
         edge = edges.get()
         vertex = edge.y if edge.x in tree else edge.x
 
