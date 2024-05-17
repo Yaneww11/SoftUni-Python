@@ -103,5 +103,5 @@ for i in range(int(m)):
 
 mst = FindMinimumSpanningTree(vertices, 1)
 sum_mst_path = sum([mst[i].weight for i in range(len(mst))])
-print(', '.join(str(x) for x in mst))
+print('\n'.join(str(x) for x in mst))
 print(f'The sum is {sum_mst_path}')
